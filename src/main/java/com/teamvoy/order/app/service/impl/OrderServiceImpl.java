@@ -33,36 +33,22 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto completeOrder(Order order) {
         Item item = itemService.findByName(order.getItem().getItemName());
         OrderResponseDto responseDto = new OrderResponseDto();
-        if (isEnough(item.getQuantity(), order.getItemsQuantity())) {
-            responseDto.setItemName(item.getItemName());
-            responseDto.setQuantity(item.getQuantity());
-            responseDto.setPrice(item.getPrice()
-                    .multiply(BigDecimal.valueOf(responseDto.getQuantity())));
-            item.setQuantity(0);
-            itemService.update(item);
-            saveOrder(responseDto);
-            return responseDto;
-        }
         responseDto.setItemName(item.getItemName());
-        responseDto.setQuantity(order.getItemsQuantity());
+        responseDto.setQuantity(item.getQuantity());
         responseDto.setPrice(item.getPrice()
                 .multiply(BigDecimal.valueOf(responseDto.getQuantity())));
-        item.setQuantity(item.getQuantity() - order.getItemsQuantity());
+        item.setQuantity(0);
         itemService.update(item);
-        saveOrder(responseDto);
+        save(responseDto);
         return responseDto;
     }
 
-    private void saveOrder(OrderResponseDto dto) {
+    private void save(OrderResponseDto dto) {
         Order order = new Order();
         order.setItem(itemService.findByName(dto.getItemName()));
         order.setItemsQuantity(dto.getQuantity());
         order.setTotalPrice(dto.getPrice());
         orderRepository.save(order);
-    }
-
-    private boolean isEnough(Integer first, Integer second) {
-        return first < second;
     }
 
     @Override
