@@ -32,7 +32,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemResponseDto> getAllProducts() {
+    public List<ItemResponseDto> getAllItems() {
         return itemService.getAll()
                 .stream()
                 .map(itemMapper::convertFromProductToResponseDto)

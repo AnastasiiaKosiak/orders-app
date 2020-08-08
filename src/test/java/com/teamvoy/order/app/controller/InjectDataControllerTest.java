@@ -14,8 +14,8 @@ import java.util.List;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class InjectDataControllerTest {
-    private ItemService itemService = Mockito.mock(ItemService.class);
-    private OrderService orderService = Mockito.mock(OrderService.class);
+    private final ItemService itemService = Mockito.mock(ItemService.class);
+    private final OrderService orderService = Mockito.mock(OrderService.class);
 
     @Test
     public void testAddingItems() {

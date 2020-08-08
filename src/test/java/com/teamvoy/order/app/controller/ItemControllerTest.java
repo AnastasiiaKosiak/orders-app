@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,6 +36,21 @@ class ItemControllerTest {
         mvc.perform(post("/items")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllItems_isOk() throws Exception {
+        mvc.perform(get("/items")
+                .contentType("application/json"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetCheapestItems_isOk() throws Exception {
+        mvc.perform(get("/items/cheapest/{itemName}", "apple")
+                .contentType("application/json")
+                .param("quantity", "1"))
                 .andExpect(status().isOk());
     }
 }
