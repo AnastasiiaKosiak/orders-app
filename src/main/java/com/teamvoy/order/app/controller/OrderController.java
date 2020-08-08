@@ -33,12 +33,6 @@ public class OrderController {
         orderService.create(newOrder);
     }
 
-    @PostMapping("/checkout")
-    public OrderResponseDto completeOrder(@RequestBody OrderRequestDto orderRequestDto) {
-        return orderService
-                .completeOrder(orderMapper.convertFromRequestDtoToOrder(orderRequestDto));
-    }
-
     @GetMapping
     public List<OrderResponseDto> getAllOrders() {
         return orderService.getAll()
@@ -50,7 +44,7 @@ public class OrderController {
     @GetMapping("/{id}")
     public void deleteOrder(@PathVariable String id) {
         Order order = orderService.getById(Long.valueOf(id));
-        if (!isValid(order)) {
+        if (isValid(order)) {
             orderService.delete(Long.valueOf(id));
         }
     }
@@ -59,9 +53,7 @@ public class OrderController {
     public List<OrderResponseDto> deleteALlInvalidOrders() {
         List<Order> orders = orderService.getAll();
         for (Order order : orders) {
-            if (!isValid(order)) {
-                orderService.delete(order.getId());
-            }
+            deleteOrder(String.valueOf(order.getId()));
         }
         return orderService.getAll()
                 .stream()

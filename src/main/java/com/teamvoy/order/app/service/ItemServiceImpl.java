@@ -1,4 +1,4 @@
-package com.teamvoy.order.app.service.impl;
+package com.teamvoy.order.app.service;
 
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.repository.ItemRepository;
