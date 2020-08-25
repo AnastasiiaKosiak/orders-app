@@ -9,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -26,4 +24,46 @@ public class Order {
     private BigDecimal totalPrice;
     @Column(name = "quantity")
     private Integer itemsQuantity;
+
+    public Order() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreationTIme() {
+        return creationTIme;
+    }
+
+    public void setCreationTIme(LocalDateTime creationTIme) {
+        this.creationTIme = creationTIme;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Integer getItemsQuantity() {
+        return itemsQuantity;
+    }
+
+    public void setItemsQuantity(Integer itemsQuantity) {
+        this.itemsQuantity = itemsQuantity;
+    }
 }
