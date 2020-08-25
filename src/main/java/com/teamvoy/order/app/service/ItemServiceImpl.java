@@ -2,7 +2,6 @@ package com.teamvoy.order.app.service;
 
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.repository.ItemRepository;
-import com.teamvoy.order.app.service.ItemService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
