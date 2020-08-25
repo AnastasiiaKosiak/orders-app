@@ -2,7 +2,6 @@ package com.teamvoy.order.app.service;
 
 import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.repository.OrderRepository;
-import com.teamvoy.order.app.service.OrderService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
