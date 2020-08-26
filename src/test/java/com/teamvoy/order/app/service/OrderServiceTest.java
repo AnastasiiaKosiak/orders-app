@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
@@ -42,16 +41,6 @@ class OrderServiceTest {
         given(orderService.create(order)).willReturn(order);
         Order actual = orderService.create(order);
         assertEquals(order, actual);
-    }
-
-    @Test
-    public void testGetAllOrders_isOk() {
-        itemDao.save(item);
-        orderService.create(order);
-        List<Order> expected = List.of(order);
-        given(orderService.getAll()).willReturn(expected);
-        List<Order> actual = orderService.getAll();
-        assertEquals(expected, actual);
     }
 
     @Test
