@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.context.ActiveProfiles;
-import java.math.BigDecimal;
 import java.util.List;
 
 @AutoConfigureMockMvc
@@ -19,9 +18,9 @@ class InjectDataControllerTest {
 
     @Test
     public void testAddingItems() {
-        Item product1 = new Item(BigDecimal.valueOf(12.0), "apple", 10);
-        Item product2 = new Item(BigDecimal.valueOf(7.5), "apple", 2);
-        Item product3 = new Item(BigDecimal.valueOf(23.4), "orange", 5);
+        Item product1 = new Item(12.0, "apple", 10);
+        Item product2 = new Item(7.5, "apple", 2);
+        Item product3 = new Item(23.4, "orange", 5);
         itemService.addAll(List.of(product1, product2, product3));
         Mockito.when(itemService.getAll())
                 .thenReturn(List.of(product1, product2, product3));
@@ -30,7 +29,7 @@ class InjectDataControllerTest {
     @Test
     public void testAddingOrders() {
         Order order = new Order();
-        order.setItem(itemService.findByName("orange"));
+        order.setItemName(itemService.findByName("orange").getItemName());
         order.setItemsQuantity(2);
         orderService.create(order);
         Mockito.when(orderService.getAll())

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ItemResponseDto {
-    private BigDecimal price;
+    private Double price;
     private String itemName;
     private Integer quantity;
 }

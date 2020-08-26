@@ -16,7 +16,7 @@ public class OrderMapper {
 
     public Order convertFromRequestDtoToOrder(OrderRequestDto orderRequestDto) {
         Order order = new Order();
-        order.setItem(itemService.findByName(orderRequestDto.getItemName()));
+        order.setItemName(orderRequestDto.getItemName());
         order.setItemsQuantity(orderRequestDto.getQuantity());
         return order;
     }
@@ -24,7 +24,7 @@ public class OrderMapper {
     public OrderResponseDto convertFromOrderToResponseDto(Order order) {
         OrderResponseDto responseDto = new OrderResponseDto();
         responseDto.setPrice(order.getTotalPrice());
-        responseDto.setItemName(order.getItem().getItemName());
+        responseDto.setItemName(order.getItemName());
         responseDto.setQuantity(order.getItemsQuantity());
         return responseDto;
     }

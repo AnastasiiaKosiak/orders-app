@@ -10,11 +10,7 @@ public interface ItemService {
 
     List<Item> getAll();
 
-    Item getById(Long id);
-
     List<Item> getCheapestProducts(String itemName, int quantity);
-
-    Item update(Item product);
 
     Item findByName(String productName);
 }

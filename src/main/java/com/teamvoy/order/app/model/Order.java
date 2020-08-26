@@ -1,29 +1,25 @@
 package com.teamvoy.order.app.model;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import lombok.Data;
+import org.influxdb.annotation.Column;
+import org.influxdb.annotation.Measurement;
 
 @Data
-@Entity
-@Table(name = "orders")
+@Measurement(name = "order")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "time")
+    private Instant time;
+    @Column(name = "id")
     private Long id;
     @Column(name = "creation_time")
     private LocalDateTime creationTIme;
-    @ManyToOne
-    private Item item;
+    private String itemName;
     @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
     @Column(name = "quantity")
     private Integer itemsQuantity;
 }
+
