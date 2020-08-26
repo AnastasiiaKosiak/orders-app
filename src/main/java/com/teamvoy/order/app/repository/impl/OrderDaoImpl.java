@@ -15,19 +15,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderDaoImpl implements OrderDao {
     private static final String DB_NAME = "test";
-    private static final Integer REPLICATION_FACTOR = 1;
-    private static final String INTERVAL = "30d";
+//    private static final Integer REPLICATION_FACTOR = 1;
+//    private static final String INTERVAL = "30d";
     private static final String DB_POLICY = "defaultPolicy";
     private final InfluxDB database;
 
-    public OrderDaoImpl(@Qualifier("connectToDatabase") InfluxDB database) {
+    public OrderDaoImpl(@Qualifier("getInfluxDatabase") InfluxDB database) {
         this.database = database;
     }
 
     @Override
     public Order create(Order order) {
-        database.createDatabase(DB_NAME);
-        configureDatabase(database);
+      //  database.createDatabase(DB_NAME);
+       // configureDatabase(database);
         Point point = Point.measurement("item")
                 .addField("id", order.getId())
                 .addField("creationTIme", String.valueOf(LocalDateTime.now()))
@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        configureDatabase(database);
+       // configureDatabase(database);
         String selectQuery = "SELECT * FROM order";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
@@ -52,7 +52,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getById(Long id) {
-        configureDatabase(database);
+      //  configureDatabase(database);
         String selectQuery = "SELECT * FROM order WHERE order.id = " + id;
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
@@ -62,15 +62,15 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void delete(Long id) {
-        configureDatabase(database);
+      //  configureDatabase(database);
         String deleteQuery = "DELETE FROM order WHERE order.id = " + id;
         Query queryObject = new Query(deleteQuery, DB_NAME);
         database.query(queryObject);
     }
 
-    private void configureDatabase(InfluxDB db) {
-        database.setDatabase(DB_NAME);
-        database.createRetentionPolicy(DB_POLICY, DB_NAME, INTERVAL, REPLICATION_FACTOR, true);
-        database.setRetentionPolicy(DB_POLICY);
-    }
+//    private void configureDatabase(InfluxDB db) {
+//        database.setDatabase(DB_NAME);
+//        database.createRetentionPolicy(DB_POLICY, DB_NAME, INTERVAL, REPLICATION_FACTOR, true);
+//        database.setRetentionPolicy(DB_POLICY);
+//    }
 }
