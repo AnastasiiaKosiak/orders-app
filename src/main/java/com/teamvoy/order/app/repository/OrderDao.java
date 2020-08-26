@@ -1,7 +1,6 @@
 package com.teamvoy.order.app.repository;
 
 import com.teamvoy.order.app.model.Order;
-
 import java.util.List;
 
 public interface OrderDao {

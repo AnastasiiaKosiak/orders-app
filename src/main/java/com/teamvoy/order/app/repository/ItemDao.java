@@ -2,7 +2,6 @@ package com.teamvoy.order.app.repository;
 
 import com.teamvoy.order.app.model.Item;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 
 public interface ItemDao {

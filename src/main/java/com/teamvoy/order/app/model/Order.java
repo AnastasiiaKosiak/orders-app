@@ -1,6 +1,5 @@
 package com.teamvoy.order.app.model;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import lombok.Data;
