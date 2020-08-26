@@ -6,7 +6,7 @@ import java.util.List;
 public interface ItemService {
     Item add(Item product);
 
-    void addAll(List<Item> products);
+    List<Item> addAll(List<Item> products);
 
     List<Item> getAll();
 

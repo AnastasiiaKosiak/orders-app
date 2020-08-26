@@ -19,8 +19,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void addAll(List<Item> products) {
-        itemDao.saveAll(products);
+    public List<Item> addAll(List<Item> products) {
+        return itemDao.saveAll(products);
     }
 
     @Override

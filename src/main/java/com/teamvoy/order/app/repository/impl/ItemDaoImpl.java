@@ -25,6 +25,7 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public Item save(Item item) {
         Point point = Point.measurement("item")
+                .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField("id", item.getId())
                 .addField("price", item.getPrice())
                 .addField("quantity", item.getQuantity())

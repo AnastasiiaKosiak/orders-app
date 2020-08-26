@@ -21,8 +21,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order create(Order order) {
         order.setCreationTIme(LocalDateTime.now());
-        Item orderItem = itemRepository.findFirstByItemName(order.getItemName());
-        order.setTotalPrice(orderItem.getPrice() * (order.getItemsQuantity()));
+        Item item = itemRepository.findFirstByItemName(order.getItemName());
+        order.setTotalPrice(item.getPrice() * (order.getItemsQuantity()));
         return orderRepository.create(order);
     }
 

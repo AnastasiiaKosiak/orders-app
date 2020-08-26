@@ -4,6 +4,7 @@ import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.repository.OrderDao;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -25,6 +26,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
         Point point = Point.measurement("item")
+                .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField("id", order.getId())
                 .addField("creationTIme", String.valueOf(LocalDateTime.now()))
                 .addField("itemName", order.getItemName())
