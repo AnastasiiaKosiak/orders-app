@@ -12,11 +12,13 @@ public class ItemMapper {
         responseDto.setQuantity(item.getQuantity());
         responseDto.setItemName(item.getItemName());
         responseDto.setPrice(item.getPrice());
+        responseDto.setId(item.getId());
         return responseDto;
     }
 
     public Item convertFromRequestDtoToProduct(ItemRequestDto requestDto) {
         Item item = new Item();
+        item.setId(requestDto.getId());
         item.setPrice(requestDto.getPrice());
         item.setQuantity(requestDto.getQuantity());
         item.setItemName(requestDto.getItemName());

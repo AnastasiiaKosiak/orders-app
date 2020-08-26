@@ -2,43 +2,42 @@ package com.teamvoy.order.app.service;
 
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.repository.ItemDao;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ItemServiceTest {
     private final ItemDao itemDao = Mockito.mock(ItemDao.class);
     private final ItemService itemService = new ItemServiceImpl(itemDao);
+    private Item item;
+
+    @BeforeEach
+    public void setUp() {
+        item = new Item();
+        item.setId(1L);
+        item.setItemName("apple");
+        item.setPrice(12.0);
+        item.setQuantity(1);
+        item.setTime(Instant.now());
+    }
 
     @Test
     public void testAddItem_isOk() {
-        Item expected = new Item();
-        expected.setId(1L);
-        expected.setItemName("apple");
-        expected.setPrice(12.0);
-        expected.setQuantity(1);
-        expected.setTime(Instant.now());
-        given(itemService.add(expected)).willReturn(expected);
-        Item actual = itemService.add(expected);
-        assertEquals(expected, actual);
+        given(itemService.add(item)).willReturn(item);
+        Item actual = itemService.add(item);
+        assertEquals(item, actual);
     }
 
     @Test
     public void testAddAllItems_isOk() {
-        Item item1 = new Item();
-        item1.setId(1L);
-        item1.setItemName("apple");
-        item1.setPrice(12.0);
-        item1.setQuantity(1);
-        item1.setTime(Instant.now());
-        List<Item> expected = List.of(item1);
+        List<Item> expected = List.of(item);
         given(itemService.addAll(expected)).willReturn(expected);
         List<Item> actual = itemService.addAll(expected);
         assertEquals(expected, actual);
@@ -46,12 +45,6 @@ class ItemServiceTest {
 
     @Test
     public void testGetAllItems_isOk() {
-        Item item = new Item();
-        item.setId(3L);
-        item.setItemName("apple");
-        item.setPrice(12.0);
-        item.setQuantity(1);
-        item.setTime(Instant.now());
         itemService.add(item);
         List<Item> expected = List.of(item);
         given(itemService.getAll()).willReturn(expected);
@@ -82,15 +75,9 @@ class ItemServiceTest {
 
     @Test
     public void getItemByName_isOk() {
-        Item expected = new Item();
-        expected.setId(20L);
-        expected.setItemName("apple");
-        expected.setPrice(12.0);
-        expected.setQuantity(1);
-        expected.setTime(Instant.now());
-        itemService.add(expected);
-        given(itemService.findByName("apple")).willReturn(expected);
+        itemService.add(item);
+        given(itemService.findByName("apple")).willReturn(item);
         Item actual = itemService.findByName("apple");
-        assertEquals(expected, actual);
+        assertEquals(item, actual);
     }
 }
