@@ -1,0 +1,13 @@
+version: '3'
+services:
+  influx:
+    image: influxdb
+    container_name: influxdb
+  backend:
+    container_name: order-app
+    image: order-app
+    build: .
+    ports:
+    - "8080:8080"
+    depends_on:
+      - influx

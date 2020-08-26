@@ -1,8 +1,8 @@
 package com.teamvoy.order.app.mapper;
 
+import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.model.dto.OrderRequestDto;
 import com.teamvoy.order.app.model.dto.OrderResponseDto;
-import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.service.ItemService;
 import org.springframework.stereotype.Component;
 

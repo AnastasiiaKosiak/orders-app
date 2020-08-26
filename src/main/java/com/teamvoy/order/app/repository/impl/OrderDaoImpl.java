@@ -2,6 +2,8 @@ package com.teamvoy.order.app.repository.impl;
 
 import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.repository.OrderDao;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -9,8 +11,6 @@ import org.influxdb.dto.QueryResult;
 import org.influxdb.impl.InfluxDBResultMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 public class OrderDaoImpl implements OrderDao {
@@ -53,7 +53,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order getById(Long id) {
         configureDatabase(database);
-        String selectQuery = "SELECT * FROM order WHERE order.id = "+ id;
+        String selectQuery = "SELECT * FROM order WHERE order.id = " + id;
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();

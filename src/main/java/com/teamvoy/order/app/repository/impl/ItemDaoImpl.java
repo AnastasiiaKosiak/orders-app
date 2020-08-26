@@ -2,6 +2,8 @@ package com.teamvoy.order.app.repository.impl;
 
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.repository.ItemDao;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -9,16 +11,14 @@ import org.influxdb.dto.QueryResult;
 import org.influxdb.impl.InfluxDBResultMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class ItemDaoImpl implements ItemDao {
-    private final InfluxDB database;
     private static final String DB_NAME = "test";
     private static final Integer REPLICATION_FACTOR = 1;
     private static final String INTERVAL = "30d";
     private static final String DB_POLICY = "defaultPolicy";
+    private final InfluxDB database;
 
     public ItemDaoImpl(@Qualifier("connectToDatabase") InfluxDB database) {
         this.database = database;
@@ -61,7 +61,8 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public List<Item> findCheapItems(String name) {
         configureDatabase(database);
-        String selectQuery = "SELECT * FROM item WHERE item.itemName =" + name + "ORDER BY item.price ASC";
+        String selectQuery = "SELECT * FROM item WHERE item.itemName ="
+                + name + "ORDER BY item.price ASC";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();

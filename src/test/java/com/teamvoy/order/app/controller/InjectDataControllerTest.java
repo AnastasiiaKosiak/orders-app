@@ -25,14 +25,4 @@ class InjectDataControllerTest {
         Mockito.when(itemService.getAll())
                 .thenReturn(List.of(product1, product2, product3));
     }
-
-    @Test
-    public void testAddingOrders() {
-        Order order = new Order();
-        order.setItemName(itemService.findByName("orange").getItemName());
-        order.setItemsQuantity(2);
-        orderService.create(order);
-        Mockito.when(orderService.getAll())
-                .thenReturn(List.of(order));
-    }
 }
