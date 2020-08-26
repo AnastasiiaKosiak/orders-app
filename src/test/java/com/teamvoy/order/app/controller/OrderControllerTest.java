@@ -25,10 +25,6 @@ class OrderControllerTest {
     private MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @MockBean
-    private OrderService orderService;
-    @MockBean
-    private OrderMapper orderMapper;
 
     @Test
     public void testCreateOrder_isOk() throws Exception {

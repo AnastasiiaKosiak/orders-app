@@ -23,10 +23,6 @@ class ItemControllerTest {
     private MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @MockBean
-    private ItemService itemService;
-    @MockBean
-    private ItemMapper itemMapper;
 
     @Test
     public void testCreateItem_isOk() throws Exception {
