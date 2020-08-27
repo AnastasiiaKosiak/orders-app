@@ -3,19 +3,17 @@ package com.teamvoy.order.app.service;
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.repository.ItemDao;
-import com.teamvoy.order.app.repository.OrderDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
-    private final OrderDao orderDao = Mockito.mock(OrderDao.class);
     private final OrderService orderService = Mockito.mock(OrderService.class);
     private final ItemDao itemDao = Mockito.mock(ItemDao.class);
     private Order order;
