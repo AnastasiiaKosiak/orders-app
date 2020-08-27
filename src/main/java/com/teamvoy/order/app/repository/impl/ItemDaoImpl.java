@@ -56,7 +56,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> findCheapItems(String name) {
-        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = \'" + name + "\'";
+        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = '" + name + "'";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
@@ -67,7 +67,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item findFirstByItemName(String name) {
-        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = \'" + name + "\'";
+        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = '" + name + "'";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
