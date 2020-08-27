@@ -2,11 +2,9 @@ package com.teamvoy.order.app.model;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import lombok.Data;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 
-@Data
 @Measurement(name = "order")
 public class Order {
     @Column(name = "time")
@@ -20,5 +18,48 @@ public class Order {
     private Double totalPrice;
     @Column(name = "quantity")
     private Integer itemsQuantity;
+
+    public Order() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreationTIme() {
+        return creationTIme;
+    }
+
+    public void setCreationTIme(LocalDateTime creationTIme) {
+        this.creationTIme = creationTIme;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Integer getItemsQuantity() {
+        return itemsQuantity;
+    }
+
+    public void setItemsQuantity(Integer itemsQuantity) {
+        this.itemsQuantity = itemsQuantity;
+    }
 }
 
