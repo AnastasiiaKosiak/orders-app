@@ -1,6 +1,7 @@
 package com.teamvoy.order.app.model.dto;
 
 public class OrderRequestDto {
+    private Long id;
     private String itemName;
     private Integer quantity;
 

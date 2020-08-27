@@ -1,40 +1,43 @@
 package com.teamvoy.order.app.service;
 
+import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.model.Order;
-import com.teamvoy.order.app.repository.OrderRepository;
-import java.math.BigDecimal;
+import com.teamvoy.order.app.repository.ItemDao;
+import com.teamvoy.order.app.repository.OrderDao;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepository;
+    private final OrderDao orderRepository;
+    private final ItemDao itemRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderDao orderRepository, ItemDao itemRepository) {
         this.orderRepository = orderRepository;
+        this.itemRepository = itemRepository;
     }
 
     @Override
     public Order create(Order order) {
         order.setCreationTIme(LocalDateTime.now());
-        order.setTotalPrice(order.getItem().getPrice()
-                .multiply(BigDecimal.valueOf(order.getItemsQuantity())));
-        return orderRepository.save(order);
+        Item item = itemRepository.findFirstByItemName(order.getItemName());
+        order.setTotalPrice(item.getPrice() * (order.getItemsQuantity()));
+        return orderRepository.create(order);
     }
 
     @Override
     public List<Order> getAll() {
-        return orderRepository.findAll();
+        return orderRepository.getAll();
     }
 
     @Override
     public Order getById(Long id) {
-        return orderRepository.findById(id).get();
+        return orderRepository.getById(id);
     }
 
     @Override
     public void delete(Long id) {
-        orderRepository.deleteById(id);
+        orderRepository.delete(id);
     }
 }

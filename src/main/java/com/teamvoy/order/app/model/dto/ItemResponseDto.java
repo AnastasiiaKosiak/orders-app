@@ -1,17 +1,16 @@
 package com.teamvoy.order.app.model.dto;
 
-import java.math.BigDecimal;
-
 public class ItemResponseDto {
-    private BigDecimal price;
+    private Long id;
+    private Double price;
     private String itemName;
     private Integer quantity;
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

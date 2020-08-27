@@ -24,15 +24,17 @@ class ItemControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private ItemService itemService;
-    @MockBean
     private ItemMapper itemMapper;
+    @MockBean
+    private ItemService itemService;
 
     @Test
     public void testCreateItem_isOk() throws Exception {
         ItemRequestDto requestDto = new ItemRequestDto();
         requestDto.setItemName("apple");
+        requestDto.setId(3L);
         requestDto.setQuantity(2);
+        requestDto.setPrice(23.0);
         mvc.perform(post("/items")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(requestDto)))
