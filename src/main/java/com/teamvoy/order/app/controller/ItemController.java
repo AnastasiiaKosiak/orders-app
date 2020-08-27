@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,9 +38,9 @@ public class ItemController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/cheapest/{itemName}")
+    @GetMapping("/cheapest/{itemName}/{quantity}")
     public List<ItemResponseDto> getCheapestItems(@PathVariable String itemName,
-                                                  @RequestParam int quantity) {
+                                                  @PathVariable int quantity) {
         return itemService.getCheapestProducts(itemName, quantity)
                 .stream()
                 .map(itemMapper::convertFromProductToResponseDto)
