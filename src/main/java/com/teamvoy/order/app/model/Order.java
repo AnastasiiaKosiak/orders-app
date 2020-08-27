@@ -22,6 +22,14 @@ public class Order {
     public Order() {
     }
 
+    public Instant getTime() {
+        return time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
     public Long getId() {
         return id;
     }
@@ -38,12 +46,12 @@ public class Order {
         this.creationTIme = creationTIme;
     }
 
-    public Item getItem() {
-        return item;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public Double getTotalPrice() {

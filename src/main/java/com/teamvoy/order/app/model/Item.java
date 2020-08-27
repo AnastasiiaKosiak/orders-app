@@ -20,6 +20,14 @@ public class Item {
     public Item() {
     }
 
+    public Instant getTime() {
+        return time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
     public Item(Double price, String itemName, Integer quantity) {
         this.price = price;
         this.quantity = quantity;

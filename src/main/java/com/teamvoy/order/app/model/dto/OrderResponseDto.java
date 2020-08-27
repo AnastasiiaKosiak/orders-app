@@ -6,6 +6,14 @@ public class OrderResponseDto {
     private Integer quantity;
     private String itemName;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Double getPrice() {
         return price;
     }
