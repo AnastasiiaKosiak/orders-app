@@ -56,7 +56,7 @@ public class OrderController {
     public void deleteInvalidOrdersOnSchedule() {
         List<Order> orders = orderService.getAll();
         for (Order order : orders) {
-            deleteOrder(String.valueOf(order.getId()));
+            orderService.delete(order.getId());
         }
     }
 
