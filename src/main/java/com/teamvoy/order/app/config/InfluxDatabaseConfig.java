@@ -12,7 +12,7 @@ import org.springframework.data.influxdb.InfluxDBProperties;
 public class InfluxDatabaseConfig {
     @Bean
     public InfluxDB influxDB() {
-        InfluxDB connection = InfluxDBFactory.connect("http://localhost:8086", "admin", "admin");
+        InfluxDB connection = InfluxDBFactory.connect("http://172.21.0.1:8086", "admin", "admin");
         connection.createDatabase("test");
         connection.setDatabase("test");
         return connection;
