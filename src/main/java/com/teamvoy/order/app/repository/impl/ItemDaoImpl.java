@@ -2,6 +2,7 @@ package com.teamvoy.order.app.repository.impl;
 
 import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.repository.ItemDao;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.influxdb.InfluxDB;
@@ -15,15 +16,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemDaoImpl implements ItemDao {
     private static final String DB_NAME = "test";
-    private static final String DB_POLICY = "defaultPolicy";
     private final InfluxDB database;
 
-    public ItemDaoImpl(@Qualifier("getInfluxDatabase") InfluxDB database) {
+    public ItemDaoImpl(@Qualifier("influxDB") InfluxDB database) {
         this.database = database;
     }
 
     @Override
     public Item save(Item item) {
+        database.enableBatch(1, 1, TimeUnit.MILLISECONDS);
         Point point = Point.measurement("item")
                 .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField("id", item.getId())
@@ -31,7 +32,7 @@ public class ItemDaoImpl implements ItemDao {
                 .addField("quantity", item.getQuantity())
                 .addField("itemName", item.getItemName())
                 .build();
-        database.write(DB_NAME, DB_POLICY, point);
+        database.write(point);
         database.disableBatch();
         return item;
     }
@@ -47,7 +48,7 @@ public class ItemDaoImpl implements ItemDao {
                     .addField("quantity", item.getQuantity())
                     .addField("itemName", item.getItemName())
                     .build();
-            database.write(DB_NAME, DB_POLICY, point);
+            database.write(point);
         }
         database.disableBatch();
         return items;
@@ -55,26 +56,28 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> findCheapItems(String name) {
-        String selectQuery = "SELECT * FROM item WHERE item.itemName ="
-                + name + "ORDER BY item.price ASC";
+        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = \'" + name + "\'";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
-        return resultMapper.toPOJO(queryResult, Item.class);
+        List<Item> result = resultMapper.toPOJO(queryResult, Item.class);
+        result.sort(Comparator.comparing(Item::getPrice));
+        return result;
     }
 
     @Override
     public Item findFirstByItemName(String name) {
-        String selectQuery = "SELECT * FROM item WHERE item.itemName = " + name;
+        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = \'" + name + "\'";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
-        return resultMapper.toPOJO(queryResult, Item.class).get(0);
+        List<Item> allItems = resultMapper.toPOJO(queryResult, Item.class);
+        return allItems.get(0);
     }
 
     @Override
     public List<Item> findAll() {
-        String selectQuery = "SELECT * FROM item";
+        String selectQuery = "SELECT * FROM \"item\"";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();

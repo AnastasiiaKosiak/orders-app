@@ -16,16 +16,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderDaoImpl implements OrderDao {
     private static final String DB_NAME = "test";
-    private static final String DB_POLICY = "defaultPolicy";
     private final InfluxDB database;
 
-    public OrderDaoImpl(@Qualifier("getInfluxDatabase") InfluxDB database) {
+    public OrderDaoImpl(@Qualifier("influxDB") InfluxDB database) {
         this.database = database;
     }
 
     @Override
     public Order create(Order order) {
-        Point point = Point.measurement("item")
+        database.enableBatch(1, 1, TimeUnit.MILLISECONDS);
+        Point point = Point.measurement("order")
                 .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField("id", order.getId())
                 .addField("creationTIme", String.valueOf(LocalDateTime.now()))
@@ -33,14 +33,14 @@ public class OrderDaoImpl implements OrderDao {
                 .addField("totalPrice", order.getTotalPrice())
                 .addField("quantity", order.getItemsQuantity())
                 .build();
-        database.write(DB_NAME, DB_POLICY, point);
+        database.write(point);
         database.disableBatch();
         return order;
     }
 
     @Override
     public List<Order> getAll() {
-        String selectQuery = "SELECT * FROM order";
+        String selectQuery = "SELECT * FROM \"order\"";
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
@@ -49,16 +49,17 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getById(Long id) {
-        String selectQuery = "SELECT * FROM order WHERE order.id = " + id;
+        String selectQuery = "SELECT * FROM \"order\" WHERE \"id\" = " + id;
         Query queryObject = new Query(selectQuery, DB_NAME);
         QueryResult queryResult = database.query(queryObject);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
-        return resultMapper.toPOJO(queryResult, Order.class).get(0);
+        List<Order> orders = resultMapper.toPOJO(queryResult, Order.class);
+        return orders.stream().findFirst().get();
     }
 
     @Override
     public void delete(Long id) {
-        String deleteQuery = "DELETE FROM order WHERE order.id = " + id;
+        String deleteQuery = "DELETE FROM \"order\" WHERE \"id\" = " + id;
         Query queryObject = new Query(deleteQuery, DB_NAME);
         database.query(queryObject);
     }

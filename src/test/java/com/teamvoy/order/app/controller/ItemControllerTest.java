@@ -50,9 +50,8 @@ class ItemControllerTest {
 
     @Test
     public void testGetCheapestItems_isOk() throws Exception {
-        mvc.perform(get("/items/cheapest/{itemName}", "apple")
-                .contentType("application/json")
-                .param("quantity", "1"))
+        mvc.perform(get("/items/cheapest/{itemName}/{quantity}", "apple", "1")
+                .contentType("application/json"))
                 .andExpect(status().isOk());
     }
 }
