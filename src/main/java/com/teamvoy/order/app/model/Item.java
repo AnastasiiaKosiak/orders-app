@@ -1,6 +1,5 @@
 package com.teamvoy.order.app.model;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    private final static String CRON_EXPRESSION = "0 0/1 0 ? * * *";
     private final OrderMapper orderMapper;
     private final OrderService orderService;
 

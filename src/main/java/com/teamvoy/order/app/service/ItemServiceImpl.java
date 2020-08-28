@@ -31,12 +31,30 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getCheapestProducts(String itemName, int quantity) {
         List<Item> sortedItems = itemDao.findCheapItems(itemName);
-        return (quantity > sortedItems.size() - 1)
-                ? sortedItems : sortedItems.subList(0, quantity);
+        int totalCount = getTotalItemsCount(sortedItems);
+        if (totalCount < quantity) {
+            return sortedItems;
+        }
+        int itemIndex = 0;
+        int currentQuantity = 0;
+        for (Item item : sortedItems) {
+            while (currentQuantity < quantity) {
+                currentQuantity += item.getQuantity();
+                itemIndex++;
+            }
+            break;
+        }
+        return sortedItems.subList(0, itemIndex);
     }
 
     @Override
     public Item findByName(String productName) {
         return itemDao.findFirstByItemName(productName);
+    }
+
+    private int getTotalItemsCount(List<Item> items) {
+        return items.stream()
+                .map(Item::getQuantity)
+                .reduce(0, Integer::sum);
     }
 }
