@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 public interface ItemDao {
+
     Item save(Item item);
 
     List<Item> saveAll(List<Item> items);
@@ -14,4 +15,5 @@ public interface ItemDao {
     Item findFirstByItemName(String name);
 
     List<Item> findAll();
+
 }

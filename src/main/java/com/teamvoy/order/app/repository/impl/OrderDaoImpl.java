@@ -60,4 +60,11 @@ public class OrderDaoImpl implements OrderDao {
         String deleteQuery = "DELETE FROM \"order\" WHERE \"id\" = " + id;
         database.query(new Query(deleteQuery, DB_NAME));
     }
+
+    @Override
+    public boolean isNotValid(Order order) {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(order.getCreationTIme().plusMinutes(10));
+    }
 }
+
