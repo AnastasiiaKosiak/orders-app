@@ -41,8 +41,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         String selectQuery = "SELECT * FROM \"order\"";
-        Query queryObject = new Query(selectQuery, DB_NAME);
-        QueryResult queryResult = database.query(queryObject);
+        QueryResult queryResult = database.query(new Query(selectQuery, DB_NAME));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         return resultMapper.toPOJO(queryResult, Order.class);
     }
@@ -50,8 +49,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order getById(Long id) {
         String selectQuery = "SELECT * FROM \"order\" WHERE \"id\" = " + id;
-        Query queryObject = new Query(selectQuery, DB_NAME);
-        QueryResult queryResult = database.query(queryObject);
+        QueryResult queryResult = database.query(new Query(selectQuery, DB_NAME));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         List<Order> orders = resultMapper.toPOJO(queryResult, Order.class);
         return orders.stream().findFirst().get();
@@ -60,7 +58,6 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void delete(Long id) {
         String deleteQuery = "DELETE FROM \"order\" WHERE \"id\" = " + id;
-        Query queryObject = new Query(deleteQuery, DB_NAME);
-        database.query(queryObject);
+        database.query(new Query(deleteQuery, DB_NAME));
     }
 }
