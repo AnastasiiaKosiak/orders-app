@@ -17,6 +17,9 @@ public class InfluxDatabaseConfig {
         InfluxDB connection = InfluxDBFactory.connect(influxDBProperties.getUrl(),
                 influxDBProperties.getUsername(),
                 influxDBProperties.getPassword());
+        if (!connection.databaseExists(DB_NAME)) {
+            connection.databaseExists(DB_NAME);
+        }
         connection.setDatabase(DB_NAME);
         return connection;
     }
