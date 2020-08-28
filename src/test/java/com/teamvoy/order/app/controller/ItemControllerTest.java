@@ -11,6 +11,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.math.BigDecimal;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +37,7 @@ class ItemControllerTest {
         requestDto.setItemName("apple");
         requestDto.setId(3L);
         requestDto.setQuantity(2);
-        requestDto.setPrice(23.0);
+        requestDto.setPrice(BigDecimal.valueOf(23.0));
         mvc.perform(post("/items")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(requestDto)))

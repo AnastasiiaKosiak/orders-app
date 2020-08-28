@@ -11,4 +11,6 @@ public interface OrderDao {
     Order getById(Long id);
 
     void delete(Long id);
+
+    boolean isNotValid(Order order);
 }

@@ -5,10 +5,8 @@ import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.model.dto.OrderRequestDto;
 import com.teamvoy.order.app.model.dto.OrderResponseDto;
 import com.teamvoy.order.app.service.OrderService;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    private final static String CRON_EXPRESSION = "0 0/1 0 ? * * *";
     private final OrderMapper orderMapper;
     private final OrderService orderService;
 
@@ -45,22 +42,6 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public void deleteOrder(@PathVariable String id) {
-        Order order = orderService.getById(Long.valueOf(id));
-        if (isValid(order)) {
-            orderService.delete(Long.valueOf(id));
-        }
-    }
-
-    @Scheduled(cron = CRON_EXPRESSION)
-    public void deleteInvalidOrdersOnSchedule() {
-        List<Order> orders = orderService.getAll();
-        for (Order order : orders) {
-            deleteOrder(String.valueOf(order.getId()));
-        }
-    }
-
-    private boolean isValid(Order order) {
-        LocalDateTime now = LocalDateTime.now();
-        return now.isAfter(order.getCreationTIme().plusMinutes(10));
+        orderService.delete(Long.valueOf(id));
     }
 }

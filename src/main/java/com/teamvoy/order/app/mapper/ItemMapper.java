@@ -4,6 +4,7 @@ import com.teamvoy.order.app.model.Item;
 import com.teamvoy.order.app.model.dto.ItemRequestDto;
 import com.teamvoy.order.app.model.dto.ItemResponseDto;
 import org.springframework.stereotype.Component;
+import java.math.BigDecimal;
 
 @Component
 public class ItemMapper {
@@ -11,7 +12,9 @@ public class ItemMapper {
         ItemResponseDto responseDto = new ItemResponseDto();
         responseDto.setQuantity(item.getQuantity());
         responseDto.setItemName(item.getItemName());
-        responseDto.setPrice(item.getPrice());
+        responseDto.setPrice(BigDecimal.valueOf(item.getPrice()));
+        responseDto.setTotalPrice(BigDecimal.valueOf(item.getPrice())
+                .multiply(BigDecimal.valueOf(item.getQuantity())));
         responseDto.setId(item.getId());
         return responseDto;
     }
@@ -19,7 +22,7 @@ public class ItemMapper {
     public Item convertFromRequestDtoToProduct(ItemRequestDto requestDto) {
         Item item = new Item();
         item.setId(requestDto.getId());
-        item.setPrice(requestDto.getPrice());
+        item.setPrice(requestDto.getPrice().doubleValue());
         item.setQuantity(requestDto.getQuantity());
         item.setItemName(requestDto.getItemName());
         return item;

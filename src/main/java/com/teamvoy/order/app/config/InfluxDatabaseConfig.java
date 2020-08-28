@@ -10,17 +10,16 @@ import org.springframework.data.influxdb.InfluxDBProperties;
 @Configuration
 @EnableConfigurationProperties(InfluxDBProperties.class)
 public class InfluxDatabaseConfig {
-    private final String DB_NAME = "test";
 
     @Bean
     public InfluxDB influxDB(final InfluxDBProperties influxDBProperties) {
         InfluxDB connection = InfluxDBFactory.connect(influxDBProperties.getUrl(),
                 influxDBProperties.getUsername(),
                 influxDBProperties.getPassword());
-        if (!connection.databaseExists(DB_NAME)) {
-            connection.databaseExists(DB_NAME);
+        if (!connection.databaseExists(influxDBProperties.getDatabase())) {
+            connection.databaseExists(influxDBProperties.getDatabase());
         }
-        connection.setDatabase(DB_NAME);
+        connection.setDatabase(influxDBProperties.getDatabase());
         return connection;
     }
 }
