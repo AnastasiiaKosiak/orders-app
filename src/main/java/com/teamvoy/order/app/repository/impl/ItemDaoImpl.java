@@ -56,9 +56,8 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> findCheapItems(String name) {
-        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = '" + name + "'";
-        Query queryObject = new Query(selectQuery, DB_NAME);
-        QueryResult queryResult = database.query(queryObject);
+        String selectQuery = "SELECT * FROM item WHERE itemName = " + name;
+        QueryResult queryResult = database.query(new Query(selectQuery, DB_NAME));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         List<Item> result = resultMapper.toPOJO(queryResult, Item.class);
         result.sort(Comparator.comparing(Item::getPrice));
@@ -67,9 +66,8 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item findFirstByItemName(String name) {
-        String selectQuery = "SELECT * FROM \"item\" WHERE \"itemName\" = '" + name + "'";
-        Query queryObject = new Query(selectQuery, DB_NAME);
-        QueryResult queryResult = database.query(queryObject);
+        String selectQuery = "SELECT * FROM item WHERE itemName = " + name;
+        QueryResult queryResult = database.query(new Query(selectQuery, DB_NAME));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         List<Item> allItems = resultMapper.toPOJO(queryResult, Item.class);
         return allItems.get(0);
@@ -77,9 +75,8 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> findAll() {
-        String selectQuery = "SELECT * FROM \"item\"";
-        Query queryObject = new Query(selectQuery, DB_NAME);
-        QueryResult queryResult = database.query(queryObject);
+        String selectQuery = "SELECT * FROM item";
+        QueryResult queryResult = database.query(new Query(selectQuery, DB_NAME));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         return resultMapper.toPOJO(queryResult, Item.class);
     }
