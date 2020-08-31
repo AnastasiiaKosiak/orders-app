@@ -3,7 +3,6 @@ package com.teamvoy.order.app.mapper;
 import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.model.dto.OrderRequestDto;
 import com.teamvoy.order.app.model.dto.OrderResponseDto;
-import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,11 +17,12 @@ public class OrderMapper {
     }
 
     public OrderResponseDto convertFromOrderToResponseDto(Order order) {
-        OrderResponseDto responseDto = new OrderResponseDto();
-        responseDto.setId(order.getId());
-        responseDto.setPrice(BigDecimal.valueOf(order.getTotalPrice()));
-        responseDto.setItemName(order.getItemName());
-        responseDto.setQuantity(order.getItemsQuantity());
-        return responseDto;
+        //        OrderResponseDto responseDto = new OrderResponseDto();
+        //        responseDto.setId(order.getId());
+        //        responseDto.setPrice(order.getTotalPrice());
+        //        responseDto.setItemName(order.getItemName());
+        //        responseDto.setQuantity(order.getItemsQuantity());
+        //        return responseDto;
+        return new OrderResponseDto();
     }
 }

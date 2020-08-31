@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 public class ItemMapper {
     public ItemResponseDto convertFromProductToResponseDto(Item item) {
         ItemResponseDto responseDto = new ItemResponseDto();
+        responseDto.setId(item.getId());
         responseDto.setQuantity(item.getQuantity());
         responseDto.setItemName(item.getItemName());
-        responseDto.setPrice(BigDecimal.valueOf(item.getPrice()));
+        responseDto.setPrice(item.getPrice());
         responseDto.setTotalPrice(BigDecimal.valueOf(item.getPrice())
-                .multiply(BigDecimal.valueOf(item.getQuantity())));
-        responseDto.setId(item.getId());
+                .multiply(BigDecimal.valueOf(item.getQuantity()))
+                .doubleValue());
         return responseDto;
     }
 

@@ -45,7 +45,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         String selectQuery = "SELECT * FROM \"order\"";
-        QueryResult queryResult = database.query(new Query(selectQuery, properties.getDatabase()));
+        QueryResult queryResult = database.query(new Query(selectQuery, "test"));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         return resultMapper.toPOJO(queryResult, Order.class);
     }

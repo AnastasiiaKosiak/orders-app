@@ -1,10 +1,8 @@
 package com.teamvoy.order.app.model.dto;
 
-import java.math.BigDecimal;
-
 public class OrderResponseDto {
     private Long id;
-    private BigDecimal price;
+    private Double price;
     private Integer quantity;
     private String itemName;
 
@@ -16,11 +14,11 @@ public class OrderResponseDto {
         this.id = id;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
