@@ -5,8 +5,12 @@ import com.teamvoy.order.app.model.Order;
 import com.teamvoy.order.app.model.dto.OrderRequestDto;
 import com.teamvoy.order.app.model.dto.OrderResponseDto;
 import com.teamvoy.order.app.service.OrderService;
+
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +31,13 @@ public class OrderController {
     }
 
     @PostMapping
-    public void createOrder(@RequestBody OrderRequestDto requestDto) {
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequestDto requestDto) {
         Order newOrder = orderMapper.convertFromRequestDtoToOrder(requestDto);
         orderService.create(newOrder);
+        URI location = URI.create("/orders");
+        return ResponseEntity.created(location)
+                .header("Response header")
+                .body("Order created");
     }
 
     @GetMapping

@@ -4,8 +4,12 @@ import com.teamvoy.order.app.mapper.ItemMapper;
 import com.teamvoy.order.app.model.dto.ItemRequestDto;
 import com.teamvoy.order.app.model.dto.ItemResponseDto;
 import com.teamvoy.order.app.service.ItemService;
+
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +30,12 @@ public class ItemController {
     }
 
     @PostMapping
-    public void add(@RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<?> add(@RequestBody ItemRequestDto itemRequestDto) {
         itemService.add(itemMapper.convertFromRequestDtoToProduct(itemRequestDto));
+        URI location = URI.create("/items");
+        return ResponseEntity.created(location)
+                .header("Response header")
+                .body("Item created");
     }
 
     @GetMapping
