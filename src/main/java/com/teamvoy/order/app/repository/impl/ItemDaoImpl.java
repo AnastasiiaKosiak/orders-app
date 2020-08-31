@@ -20,9 +20,9 @@ public class ItemDaoImpl implements ItemDao {
     private final InfluxDBProperties properties;
 
     public ItemDaoImpl(@Qualifier("influxDB") InfluxDB database,
-                       InfluxDBProperties properties1) {
+                       InfluxDBProperties properties) {
         this.database = database;
-        this.properties = properties1;
+        this.properties = properties;
     }
 
     @Override
