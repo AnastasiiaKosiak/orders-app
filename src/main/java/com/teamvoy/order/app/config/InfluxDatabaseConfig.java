@@ -12,14 +12,14 @@ import org.springframework.data.influxdb.InfluxDBProperties;
 public class InfluxDatabaseConfig {
 
     @Bean
-    public InfluxDB influxDB(final InfluxDBProperties influxDBProperties) {
-        InfluxDB connection = InfluxDBFactory.connect(influxDBProperties.getUrl(),
-                influxDBProperties.getUsername(),
-                influxDBProperties.getPassword());
-        if (!connection.databaseExists(influxDBProperties.getDatabase())) {
-            connection.createDatabase(influxDBProperties.getDatabase());
+    public InfluxDB influxDB(final InfluxDBProperties influxDatabaseProperties) {
+        InfluxDB connection = InfluxDBFactory.connect(influxDatabaseProperties.getUrl(),
+                influxDatabaseProperties.getUsername(),
+                influxDatabaseProperties.getPassword());
+        if (!connection.databaseExists(influxDatabaseProperties.getDatabase())) {
+            connection.createDatabase(influxDatabaseProperties.getDatabase());
         }
-        connection.setDatabase(influxDBProperties.getDatabase());
+        connection.setDatabase(influxDatabaseProperties.getDatabase());
         return connection;
     }
 }
