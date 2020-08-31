@@ -37,7 +37,7 @@ class OrderControllerTest {
         mvc.perform(post("/orders")
         .contentType("application/json")
         .content(objectMapper.writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
